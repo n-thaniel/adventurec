@@ -21,6 +21,22 @@ bool parseAndExecute(char *input)
         {
             executeGo(noun);
         }
+        else if (strcmp(verb, "get") == 0)
+        {
+            executeGet(noun);
+        }
+        else if (strcmp(verb, "drop") == 0)
+        {
+            executeDrop(noun);
+        }
+        else if (strcmp(verb, "ask") == 0)
+        {
+            executeAsk(noun);
+        }
+        else if (strcmp(verb, "inventory") == 0)
+        {
+            executeInventory();
+        }
         else
         {
             printf("I don't know how to '%'. Try commands I do know like 'look' or 'go' \n", verb);
