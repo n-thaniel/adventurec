@@ -40,7 +40,7 @@ bool parseAndExecute(char *input)
         }
         else
         {
-            printf("I don't know how to '%'. Try commands I do know like 'look' or 'go' \n", verb);
+            printf("I don't know how to '%s'. Try commands I do know like 'look' or 'go' \n", verb);
         }
     }
     return true;

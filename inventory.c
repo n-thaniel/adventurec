@@ -15,7 +15,7 @@ void executeGet(const char *noun)
     {
         printf("You try to collect yourself, but that is not possible in this dimension.\n");
     }
-    else if (obj->location = player)
+    else if (obj->location == player)
     {
         printf("You already have %s.\n", obj->description);
     }
