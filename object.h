@@ -5,6 +5,7 @@ typedef struct object {
     const char *description;
     const char *tag;
     struct object *location;
+    struct object *destination;
 } OBJECT;
 
 extern OBJECT objs[];
@@ -16,7 +17,9 @@ extern OBJECT objs[];
 #define guard   (objs + 4)
 #define player  (objs + 5)
 #define bat     (objs + 6)
+#define intoCave (objs + 7)
+#define exitCave (objs + 8)
 
-#define endOfObjs   (objs + 7)
+#define endOfObjs   (objs + 9)
 
 #endif
