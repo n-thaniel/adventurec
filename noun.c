@@ -9,12 +9,12 @@ static bool objectHasTag(OBJECT *obj, const char *noun)
     return noun != NULL && *noun != '\0' && strcmp(noun, obj->tag) == 0;
 }
 
-static OBJECT *getObject(const char *noun)
+static OBJECT *getObject(const char *noun, OBJECT *from, DISTANCE maxDistance)
 {
     OBJECT *obj, *res = NULL;
     for (obj = objs; obj < endOfObjs; obj++)
     {
-        if (objectHasTag(obj, noun))
+        if (objectHasTag(obj, noun) && getDistance(from, obj) <= maxDistance)
         {
             res = obj;
         }
@@ -24,21 +24,18 @@ static OBJECT *getObject(const char *noun)
 
 OBJECT *getVisible(const char *intention, const char *noun)
 {
-    OBJECT *obj = getObject(noun);
+    OBJECT *obj = getObject(noun, player, distOverThere);
     if (obj == NULL)
     {
-        printf("I don't understand %s.\n", intention);
-    }
-    else if (!(obj == player ||
-            obj == player->location ||
-            obj->location == player ||
-            obj->location == player->location ||
-            getPassage(player->location, obj) != NULL ||
-            (obj->location != NULL && (obj->location->location == player ||
-            obj->location->location == player->location))))
-    {
-        printf("You don't see any %s here.\n", noun);
-        obj = NULL;
+        if (getObject(noun, player, distNotHere) == NULL) 
+        {
+            printf("I don't understand %s.\n", intention);
+        }
+        else 
+        {
+            printf("You don't see any %s here.\n", noun);
+        }
+        
     }
     return obj;
 }
@@ -50,24 +47,24 @@ OBJECT *getPossession(OBJECT *from, const char *verb, const char *noun)
     {
         printf("I don't understand who you want to %s.\n", verb);
     }
-    else if ((obj = getObject(noun)) == NULL)
+    else if ((obj = getObject(noun, from, distHeldContained)) == NULL)
     {
-        printf("I don't understand what you want to %s.\n", verb);
-    }
-    else if (obj == from)
-    {
-        printf("You should not be doing that to %s.\n", obj->description);
-    }
-    else if (obj->location != from)
-    {
+        if (getObject(noun, player, distNotHere) == NULL) 
+        {
+            printf("I don't understand what you want to %s.\n", verb);
+        }
         if (from == player)
         {
             printf("You are not holding any %s\n", noun);
         }
-        else
+        else 
         {
             printf("There appears to be no %s you can get from %s.\n", noun, from->description);
         }
+    }
+    else if (obj == from)
+    {
+        printf("You should not be doing that to %s.\n", obj->description);
         obj = NULL;
     }
     return obj;
