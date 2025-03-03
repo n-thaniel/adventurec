@@ -6,3 +6,8 @@ I discovered Ruud Helderman's ["How to program a text adventure in C"](https://h
 
 ## Status
 At the moment I'm still fumbling around with the basics of C. Most of the code here resembles the state of the guide around Chapter 10.
+
+I plan to:
+* Retheme the game towards the end of the follow along
+* Add new locations and items to discover
+* Add my own storylines
